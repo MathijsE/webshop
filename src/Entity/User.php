@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,28 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Factuur::class, mappedBy="user_id")
+     */
+    private $factuurs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Memo::class, mappedBy="user_id")
+     */
+    private $memos;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Base::class, mappedBy="user_id")
+     */
+    private $bases;
+
+    public function __construct()
+    {
+        $this->factuurs = new ArrayCollection();
+        $this->memos = new ArrayCollection();
+        $this->bases = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,6 +151,99 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Factuur[]
+     */
+    public function getFactuurs(): Collection
+    {
+        return $this->factuurs;
+    }
+
+    public function addFactuur(Factuur $factuur): self
+    {
+        if (!$this->factuurs->contains($factuur)) {
+            $this->factuurs[] = $factuur;
+            $factuur->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactuur(Factuur $factuur): self
+    {
+        if ($this->factuurs->contains($factuur)) {
+            $this->factuurs->removeElement($factuur);
+            // set the owning side to null (unless already changed)
+            if ($factuur->getUserId() === $this) {
+                $factuur->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Memo[]
+     */
+    public function getMemos(): Collection
+    {
+        return $this->memos;
+    }
+
+    public function addMemo(Memo $memo): self
+    {
+        if (!$this->memos->contains($memo)) {
+            $this->memos[] = $memo;
+            $memo->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMemo(Memo $memo): self
+    {
+        if ($this->memos->contains($memo)) {
+            $this->memos->removeElement($memo);
+            // set the owning side to null (unless already changed)
+            if ($memo->getUserId() === $this) {
+                $memo->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Base[]
+     */
+    public function getBases(): Collection
+    {
+        return $this->bases;
+    }
+
+    public function addBasis(Base $basis): self
+    {
+        if (!$this->bases->contains($basis)) {
+            $this->bases[] = $basis;
+            $basis->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasis(Base $basis): self
+    {
+        if ($this->bases->contains($basis)) {
+            $this->bases->removeElement($basis);
+            // set the owning side to null (unless already changed)
+            if ($basis->getUserId() === $this) {
+                $basis->setUserId(null);
+            }
+        }
 
         return $this;
     }
