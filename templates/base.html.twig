@@ -51,14 +51,14 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">Flexibel webshop</a>
+            <h4>Flexibel webshop </h4> <!-- dynamisch maken dat de bedrijfsnaam uit de tabel base komt -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">#</a>
@@ -78,7 +78,13 @@
                     {% endif %}
                     {% if app.user %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout </a>
+                            <a class="nav-link" href="/memo">Memo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/base">Base</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     {% endif %}
                 </ul>
