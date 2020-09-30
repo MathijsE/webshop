@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Memo;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,9 +14,9 @@ class MemoType extends AbstractType
     {
         $builder
             ->add('titel')
-            ->add('inhoud')
-            ->add('updated_at')
-            ->add('user_id')
+            ->add('inhoud', CKEditorType::class, [
+                'config' => array('toolbar' => 'full'),
+            ])
         ;
     }
 

@@ -22,6 +22,7 @@ class BaseController extends AbstractController
     {
         return $this->render('base/index.html.twig', [
             'bases' => $baseRepository->findAll(),
+            'bedrijf' => $baseRepository->findOneBy([],[]),
         ]);
     }
 

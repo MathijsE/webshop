@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Memo;
 use App\Form\MemoType;
+use App\Repository\BaseRepository;
 use App\Repository\MemoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,11 @@ class MemoController extends AbstractController
     /**
      * @Route("/", name="memo_index", methods={"GET"})
      */
-    public function index(MemoRepository $memoRepository): Response
+    public function index(MemoRepository $memoRepository, BaseRepository $baseRepository): Response
     {
         return $this->render('memo/index.html.twig', [
             'memos' => $memoRepository->findAll(),
+            'bedrijf' => $baseRepository->findOneBy([],[]),
         ]);
     }
 
